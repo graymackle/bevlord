@@ -127,6 +127,30 @@
             display: block;
         }
 
+        .checkbox-group {
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            padding: 12px;
+            background: #f8f9ff;
+            border-radius: 8px;
+            border: 2px solid #e0e0e0;
+        }
+
+        .checkbox-group input[type="checkbox"] {
+            width: auto;
+            margin-right: 10px;
+            cursor: pointer;
+            width: 20px;
+            height: 20px;
+        }
+
+        .checkbox-group label {
+            margin: 0;
+            cursor: pointer;
+            user-select: none;
+        }
+
         /* Mobile optimization */
         @media (max-width: 600px) {
             body {
@@ -205,6 +229,11 @@
             <div class="error" id="packError">Please enter a valid pack size</div>
         </div>
 
+        <div class="checkbox-group">
+            <input type="checkbox" id="isAlcoholic">
+            <label for="isAlcoholic">Alcoholic? (15% tax vs 7% tax)</label>
+        </div>
+
         <button onclick="calculate()">Calculate</button>
 
         <div class="result" id="result">
@@ -218,6 +247,7 @@
             // Get input values
             const totalPrice = parseFloat(document.getElementById('totalPrice').value);
             const packSize = parseInt(document.getElementById('packSize').value);
+            const isAlcoholic = document.getElementById('isAlcoholic').checked;
 
             // Get error elements
             const priceError = document.getElementById('priceError');
@@ -247,8 +277,16 @@
                 return;
             }
 
+            // Calculate total with tax
+            const taxRate = isAlcoholic ? 0.15 : 0.07;
+            const totalWithTax = totalPrice * (1 + taxRate);
+
+            // Add deposit fee ($0.10 per beverage)
+            const depositFee = packSize * 0.10;
+            const totalWithDeposits = totalWithTax + depositFee;
+
             // Calculate cost per beverage
-            const costPerBeverage = totalPrice / packSize;
+            const costPerBeverage = totalWithDeposits / packSize;
 
             // Display result
             document.getElementById('resultValue').textContent = '$' + costPerBeverage.toFixed(2);
