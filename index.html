@@ -230,8 +230,8 @@
         </div>
 
         <div class="checkbox-group">
-            <input type="checkbox" id="isAlcoholic">
-            <label for="isAlcoholic">Alcoholic? (15% tax vs 7% tax)</label>
+            <input type="checkbox" id="isNonAlcoholic">
+            <label for="isNonAlcoholic">Non-Alcoholic</label>
         </div>
 
         <button onclick="calculate()">Calculate</button>
@@ -247,7 +247,7 @@
             // Get input values
             const totalPrice = parseFloat(document.getElementById('totalPrice').value);
             const packSize = parseInt(document.getElementById('packSize').value);
-            const isAlcoholic = document.getElementById('isAlcoholic').checked;
+            const isNonAlcoholic = document.getElementById('isNonAlcoholic').checked;
 
             // Get error elements
             const priceError = document.getElementById('priceError');
@@ -278,7 +278,8 @@
             }
 
             // Calculate total with tax
-            const taxRate = isAlcoholic ? 0.15 : 0.07;
+            // Default is 15% (alcoholic), if non-alcoholic is checked use 7%
+            const taxRate = isNonAlcoholic ? 0.07 : 0.15;
             const totalWithTax = totalPrice * (1 + taxRate);
 
             // Add deposit fee ($0.10 per beverage)
