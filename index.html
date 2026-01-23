@@ -126,6 +126,66 @@
         .error.show {
             display: block;
         }
+
+        /* Mobile optimization */
+        @media (max-width: 600px) {
+            body {
+                padding: 10px;
+                align-items: flex-start;
+                padding-top: 20px;
+            }
+
+            .container {
+                padding: 25px 20px;
+                border-radius: 15px;
+            }
+
+            h1 {
+                font-size: 2em;
+                margin-bottom: 8px;
+            }
+
+            .subtitle {
+                font-size: 0.85em;
+                margin-bottom: 25px;
+            }
+
+            .input-group {
+                margin-bottom: 18px;
+            }
+
+            label {
+                font-size: 0.95em;
+                margin-bottom: 6px;
+            }
+
+            input {
+                padding: 14px 12px;
+                font-size: 16px;
+            }
+
+            button {
+                padding: 16px;
+                font-size: 17px;
+                margin-top: 5px;
+            }
+
+            .result {
+                margin-top: 25px;
+                padding: 18px;
+            }
+
+            .result-value {
+                font-size: 1.8em;
+            }
+        }
+
+        /* Prevent zoom on input focus for iOS Safari */
+        @media screen and (max-width: 600px) {
+            input[type="number"] {
+                font-size: 16px;
+            }
+        }
     </style>
 </head>
 <body>
