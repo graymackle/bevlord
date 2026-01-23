@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bevlord - Beverage Price Calculator</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .container {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            max-width: 500px;
+            width: 100%;
+        }
+
+        h1 {
+            color: #667eea;
+            text-align: center;
+            margin-bottom: 10px;
+            font-size: 2.5em;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #666;
+            margin-bottom: 30px;
+            font-size: 0.9em;
+        }
+
+        .input-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+            font-weight: 600;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        button {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        button:active {
+            transform: translateY(0);
+        }
+
+        .result {
+            margin-top: 30px;
+            padding: 20px;
+            background: #f8f9ff;
+            border-radius: 10px;
+            border-left: 4px solid #667eea;
+            display: none;
+        }
+
+        .result.show {
+            display: block;
+        }
+
+        .result-label {
+            color: #666;
+            font-size: 0.9em;
+            margin-bottom: 5px;
+        }
+
+        .result-value {
+            color: #667eea;
+            font-size: 2em;
+            font-weight: 700;
+        }
+
+        .error {
+            color: #e74c3c;
+            font-size: 0.9em;
+            margin-top: 5px;
+            display: none;
+        }
+
+        .error.show {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🍺 Bevlord</h1>
+        <p class="subtitle">Calculate the cost per beverage</p>
+
+        <div class="input-group">
+            <label for="totalPrice">Total Price ($)</label>
+            <input type="number" id="totalPrice" placeholder="Enter total price" step="0.01" min="0">
+            <div class="error" id="priceError">Please enter a valid price</div>
+        </div>
+
+        <div class="input-group">
+            <label for="packSize">Pack Size (# of beverages)</label>
+            <input type="number" id="packSize" placeholder="Enter number of beverages" step="1" min="1">
+            <div class="error" id="packError">Please enter a valid pack size</div>
+        </div>
+
+        <button onclick="calculate()">Calculate</button>
+
+        <div class="result" id="result">
+            <div class="result-label">Cost per beverage:</div>
+            <div class="result-value" id="resultValue">$0.00</div>
+        </div>
+    </div>
+
+    <script>
+        function calculate() {
+            // Get input values
+            const totalPrice = parseFloat(document.getElementById('totalPrice').value);
+            const packSize = parseInt(document.getElementById('packSize').value);
+
+            // Get error elements
+            const priceError = document.getElementById('priceError');
+            const packError = document.getElementById('packError');
+            const result = document.getElementById('result');
+
+            // Reset errors
+            priceError.classList.remove('show');
+            packError.classList.remove('show');
+
+            // Validate inputs
+            let hasError = false;
+
+            if (isNaN(totalPrice) || totalPrice <= 0) {
+                priceError.classList.add('show');
+                hasError = true;
+            }
+
+            if (isNaN(packSize) || packSize <= 0 || !Number.isInteger(packSize)) {
+                packError.classList.add('show');
+                hasError = true;
+            }
+
+            // If validation fails, hide result and return
+            if (hasError) {
+                result.classList.remove('show');
+                return;
+            }
+
+            // Calculate cost per beverage
+            const costPerBeverage = totalPrice / packSize;
+
+            // Display result
+            document.getElementById('resultValue').textContent = '$' + costPerBeverage.toFixed(2);
+            result.classList.add('show');
+        }
+
+        // Allow Enter key to trigger calculation
+        document.addEventListener('keypress', function(event) {
+            if (event.key === 'Enter') {
+                calculate();
+            }
+        });
+    </script>
+</body>
+</html>
