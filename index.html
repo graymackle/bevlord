@@ -210,6 +210,104 @@
                 font-size: 16px;
             }
         }
+
+        /* Running Total List Styles */
+        .running-list {
+            margin-top: 20px;
+            display: none;
+        }
+
+        .running-list.show {
+            display: block;
+        }
+
+        .running-list-header {
+            color: #667eea;
+            font-size: 1.2em;
+            font-weight: 600;
+            margin-bottom: 10px;
+            padding-bottom: 8px;
+            border-bottom: 2px solid #e0e0e0;
+        }
+
+        .running-item {
+            background: #f8f9ff;
+            border-radius: 8px;
+            padding: 12px;
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border: 1px solid #e0e0e0;
+        }
+
+        .running-item-info {
+            flex: 1;
+        }
+
+        .running-item-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 4px;
+            font-size: 0.9em;
+        }
+
+        .running-item-label {
+            color: #666;
+            font-weight: 500;
+        }
+
+        .running-item-value {
+            color: #333;
+            font-weight: 600;
+        }
+
+        .remove-btn {
+            background: #e74c3c;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            font-size: 18px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-left: 12px;
+            transition: background-color 0.2s, transform 0.1s;
+            flex-shrink: 0;
+        }
+
+        .remove-btn:hover {
+            background: #c0392b;
+            transform: scale(1.1);
+        }
+
+        .combined-total {
+            background: #667eea;
+            color: white;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 15px;
+        }
+
+        .combined-total-label {
+            font-size: 0.9em;
+            margin-bottom: 5px;
+            opacity: 0.9;
+        }
+
+        .combined-total-value {
+            font-size: 1.5em;
+            font-weight: 700;
+        }
+
+        .combined-total-details {
+            font-size: 0.85em;
+            margin-top: 8px;
+            opacity: 0.9;
+        }
     </style>
 </head>
 <body>
@@ -234,20 +332,39 @@
             <label for="isNonAlcoholic">Non-Alcoholic</label>
         </div>
 
+        <div class="checkbox-group">
+            <input type="checkbox" id="runningTotal">
+            <label for="runningTotal">Running Total</label>
+        </div>
+
         <button onclick="calculate()">Calculate</button>
 
         <div class="result" id="result">
             <div class="result-label">Cost per beverage:</div>
             <div class="result-value" id="resultValue">$0.00</div>
         </div>
+
+        <div class="running-list" id="runningList">
+            <div class="running-list-header">Running Total Items</div>
+            <div id="runningItems"></div>
+            <div class="combined-total" id="combinedTotal" style="display: none;">
+                <div class="combined-total-label">Combined Total</div>
+                <div class="combined-total-value" id="combinedTotalValue">$0.00</div>
+                <div class="combined-total-details" id="combinedTotalDetails"></div>
+            </div>
+        </div>
     </div>
 
     <script>
+        // Array to store running total items
+        let runningItems = [];
+
         function calculate() {
             // Get input values
             const totalPrice = parseFloat(document.getElementById('totalPrice').value);
             const packSize = parseInt(document.getElementById('packSize').value);
             const isNonAlcoholic = document.getElementById('isNonAlcoholic').checked;
+            const isRunningTotal = document.getElementById('runningTotal').checked;
 
             // Get error elements
             const priceError = document.getElementById('priceError');
@@ -292,6 +409,110 @@
             // Display result
             document.getElementById('resultValue').textContent = '$' + costPerBeverage.toFixed(2);
             result.classList.add('show');
+
+            // If running total is checked, add to the list
+            if (isRunningTotal) {
+                runningItems.push({
+                    originalPrice: totalPrice,
+                    quantity: packSize,
+                    pricePerCan: costPerBeverage,
+                    isNonAlcoholic: isNonAlcoholic
+                });
+                updateRunningList();
+            }
+        }
+
+        function updateRunningList() {
+            const runningList = document.getElementById('runningList');
+            const runningItemsContainer = document.getElementById('runningItems');
+            const combinedTotal = document.getElementById('combinedTotal');
+
+            // Show the running list
+            runningList.classList.add('show');
+
+            // Clear current items
+            runningItemsContainer.innerHTML = '';
+
+            // Add each item to the list
+            runningItems.forEach((item, index) => {
+                const itemDiv = document.createElement('div');
+                itemDiv.className = 'running-item';
+                itemDiv.innerHTML = `
+                    <div class="running-item-info">
+                        <div class="running-item-row">
+                            <span class="running-item-label">Price:</span>
+                            <span class="running-item-value">$${item.originalPrice.toFixed(2)}</span>
+                        </div>
+                        <div class="running-item-row">
+                            <span class="running-item-label">Quantity:</span>
+                            <span class="running-item-value">${item.quantity}</span>
+                        </div>
+                        <div class="running-item-row">
+                            <span class="running-item-label">Price per can:</span>
+                            <span class="running-item-value">$${item.pricePerCan.toFixed(2)}</span>
+                        </div>
+                    </div>
+                    <button class="remove-btn" onclick="removeItem(${index})">×</button>
+                `;
+                runningItemsContainer.appendChild(itemDiv);
+            });
+
+            // Calculate and display combined total
+            if (runningItems.length > 0) {
+                calculateCombinedTotal();
+                combinedTotal.style.display = 'block';
+            } else {
+                combinedTotal.style.display = 'none';
+                runningList.classList.remove('show');
+            }
+        }
+
+        function calculateCombinedTotal() {
+            // Sum all original prices
+            let totalOriginalPrice = 0;
+            let totalQuantity = 0;
+            let totalNonAlcoholicPrice = 0;
+            let totalAlcoholicPrice = 0;
+            let totalNonAlcoholicQty = 0;
+            let totalAlcoholicQty = 0;
+
+            runningItems.forEach(item => {
+                totalOriginalPrice += item.originalPrice;
+                totalQuantity += item.quantity;
+
+                if (item.isNonAlcoholic) {
+                    totalNonAlcoholicPrice += item.originalPrice;
+                    totalNonAlcoholicQty += item.quantity;
+                } else {
+                    totalAlcoholicPrice += item.originalPrice;
+                    totalAlcoholicQty += item.quantity;
+                }
+            });
+
+            // Calculate tax on combined total
+            // Apply appropriate tax rate to each portion
+            const taxOnNonAlcoholic = totalNonAlcoholicPrice * 0.07;
+            const taxOnAlcoholic = totalAlcoholicPrice * 0.15;
+            const totalTax = taxOnNonAlcoholic + taxOnAlcoholic;
+            const totalWithTax = totalOriginalPrice + totalTax;
+
+            // Add deposit for all items
+            const totalDeposit = totalQuantity * 0.10;
+            const grandTotal = totalWithTax + totalDeposit;
+
+            // Calculate combined price per item
+            const pricePerItem = grandTotal / totalQuantity;
+
+            // Display combined total
+            document.getElementById('combinedTotalValue').textContent =
+                '$' + pricePerItem.toFixed(2) + ' per can';
+            document.getElementById('combinedTotalDetails').textContent =
+                `Total: $${grandTotal.toFixed(2)} | ${totalQuantity} cans | $${totalOriginalPrice.toFixed(2)} + $${totalTax.toFixed(2)} tax + $${totalDeposit.toFixed(2)} deposit`;
+        }
+
+        function removeItem(index) {
+            runningItems.splice(index, 1);
+            updateRunningList();
         }
 
         // Allow Enter key to trigger calculation
