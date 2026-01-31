@@ -4,6 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bevlord - Beverage Price Calculator</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Kings&family=Cinzel:wght@700&family=Metamorphous&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
@@ -12,29 +15,42 @@
         }
 
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            font-family: Arial, Helvetica, sans-serif;
+            background: linear-gradient(135deg, #8B0000 0%, #B22222 100%);
             min-height: 100vh;
             padding: 20px;
             display: flex;
             justify-content: center;
-            align-items: center;
+            align-items: flex-start;
+            padding-top: 40px;
         }
 
         .container {
             background: white;
-            border-radius: 20px;
+            border-radius: 0;
             padding: 40px;
             box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
             max-width: 500px;
             width: 100%;
+            min-height: 600px;
         }
 
         h1 {
-            color: #667eea;
+            color: #000000;
             text-align: center;
             margin-bottom: 10px;
             font-size: 2.5em;
+            font-family: 'Kings', cursive;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        #titleIconLeft {
+            margin-right: 15px;
+        }
+
+        #titleIconRight {
+            margin-left: 15px;
         }
 
         .subtitle {
@@ -59,32 +75,39 @@
             width: 100%;
             padding: 12px;
             border: 2px solid #e0e0e0;
-            border-radius: 8px;
+            border-radius: 0;
             font-size: 16px;
+            font-family: Arial, Helvetica, sans-serif;
             transition: border-color 0.3s;
+        }
+
+        input::placeholder {
+            font-family: Arial, Helvetica, sans-serif;
         }
 
         input:focus {
             outline: none;
-            border-color: #667eea;
+            border-color: #8B0000;
         }
 
         button {
             width: 100%;
             padding: 15px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #DC143C 0%, #C41E3A 100%);
             color: white;
             border: none;
-            border-radius: 8px;
+            border-radius: 0;
             font-size: 18px;
+            font-family: Arial, Helvetica, sans-serif;
             font-weight: 600;
             cursor: pointer;
             transition: transform 0.2s, box-shadow 0.2s;
+            text-transform: uppercase;
         }
 
         button:hover {
             transform: translateY(-2px);
-            box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4);
+            box-shadow: 0 5px 20px rgba(220, 20, 60, 0.4);
         }
 
         button:active {
@@ -95,8 +118,8 @@
             margin-top: 30px;
             padding: 20px;
             background: #f8f9ff;
-            border-radius: 10px;
-            border-left: 4px solid #667eea;
+            border-radius: 0;
+            border-left: 4px solid #8B0000;
             display: none;
         }
 
@@ -111,7 +134,7 @@
         }
 
         .result-value {
-            color: #667eea;
+            color: #000000;
             font-size: 2em;
             font-weight: 700;
         }
@@ -133,7 +156,7 @@
             align-items: center;
             padding: 12px;
             background: #f8f9ff;
-            border-radius: 8px;
+            border-radius: 0;
             border: 2px solid #e0e0e0;
         }
 
@@ -143,6 +166,7 @@
             cursor: pointer;
             width: 20px;
             height: 20px;
+            accent-color: #DC143C;
         }
 
         .checkbox-group label {
@@ -161,11 +185,22 @@
 
             .container {
                 padding: 25px 20px;
-                border-radius: 15px;
+                border-radius: 0;
+            }
+
+            .mode-toggle {
+                margin-bottom: 10px;
+                font-size: 0.8em;
+            }
+
+            .spd-toggle {
+                margin-top: 15px;
+                padding-top: 12px;
+                font-size: 0.8em;
             }
 
             h1 {
-                font-size: 2em;
+                font-size: 1.8em;
                 margin-bottom: 8px;
             }
 
@@ -222,7 +257,7 @@
         }
 
         .running-list-header {
-            color: #667eea;
+            color: #000000;
             font-size: 1.2em;
             font-weight: 600;
             margin-bottom: 10px;
@@ -232,7 +267,7 @@
 
         .running-item {
             background: #f8f9ff;
-            border-radius: 8px;
+            border-radius: 0;
             padding: 12px;
             margin-bottom: 10px;
             display: flex;
@@ -266,7 +301,7 @@
             background: #e74c3c;
             color: white;
             border: none;
-            border-radius: 50%;
+            border-radius: 0;
             width: 30px;
             height: 30px;
             font-size: 18px;
@@ -285,10 +320,10 @@
         }
 
         .combined-total {
-            background: #667eea;
+            background: #DC143C;
             color: white;
             padding: 15px;
-            border-radius: 8px;
+            border-radius: 0;
             margin-top: 15px;
         }
 
@@ -308,12 +343,335 @@
             margin-top: 8px;
             opacity: 0.9;
         }
+
+        /* Mode toggle positioned above title */
+        .mode-toggle {
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            gap: 8px;
+            font-size: 0.85em;
+            color: #666;
+            margin-bottom: 15px;
+        }
+
+        .mode-toggle label {
+            margin: 0;
+            cursor: pointer;
+            user-select: none;
+            font-weight: 500;
+        }
+
+        .mode-toggle input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+            accent-color: #DC143C;
+        }
+
+        /* Guinness Mode (Dark Mode) Styles */
+        body.guinness-mode {
+            background: linear-gradient(135deg, #1a0f0a 0%, #0d0907 100%);
+        }
+
+        body.guinness-mode .container {
+            background: #2a1810;
+            color: #faf9f6;
+        }
+
+        body.guinness-mode {
+            font-family: 'Metamorphous', cursive;
+            font-size: 15px;
+        }
+
+        body.guinness-mode h1 {
+            color: #d4af37;
+            font-family: 'Metamorphous', cursive;
+            font-size: 2.5em;
+        }
+
+        body.guinness-mode .subtitle {
+            color: #e8d5b7;
+        }
+
+        body.guinness-mode label {
+            color: #f5e6d3;
+        }
+
+        body.guinness-mode input {
+            background: #3d2817;
+            border-color: #5a4230;
+            color: #faf9f6;
+            font-family: 'Metamorphous', cursive;
+        }
+
+        body.guinness-mode input::placeholder {
+            font-family: 'Metamorphous', cursive;
+        }
+
+        body.guinness-mode input:focus {
+            border-color: #d4af37;
+        }
+
+        body.guinness-mode button {
+            background: linear-gradient(135deg, #c5a572 0%, #d4af37 100%);
+            color: #1a0f0a;
+            font-family: 'Metamorphous', cursive;
+        }
+
+        body.guinness-mode button:hover {
+            box-shadow: 0 5px 20px rgba(212, 175, 55, 0.4);
+        }
+
+        body.guinness-mode .result {
+            background: #3d2817;
+            border-left-color: #d4af37;
+        }
+
+        body.guinness-mode .result-label {
+            color: #e8d5b7;
+        }
+
+        body.guinness-mode .result-value {
+            color: #d4af37;
+        }
+
+        body.guinness-mode .checkbox-group {
+            background: #3d2817;
+            border-color: #5a4230;
+        }
+
+        body.guinness-mode .checkbox-group label {
+            color: #f5e6d3;
+        }
+
+        body.guinness-mode .running-list-header {
+            color: #d4af37;
+            border-bottom-color: #5a4230;
+        }
+
+        body.guinness-mode .running-item {
+            background: #3d2817;
+            border-color: #5a4230;
+        }
+
+        body.guinness-mode .running-item-label {
+            color: #e8d5b7;
+        }
+
+        body.guinness-mode .running-item-value {
+            color: #f5e6d3;
+        }
+
+        body.guinness-mode .combined-total {
+            background: #d4af37;
+            color: #1a0f0a;
+        }
+
+        body.guinness-mode .combined-total-label,
+        body.guinness-mode .combined-total-details {
+            opacity: 1;
+        }
+
+        body.guinness-mode .mode-toggle {
+            color: #e8d5b7;
+        }
+
+        body.guinness-mode .mode-toggle label {
+            color: #e8d5b7;
+        }
+
+        body.guinness-mode input[type="checkbox"] {
+            accent-color: #d4af37;
+        }
+
+        /* SPD Mode Styles - Overrides everything */
+        /* SPD Mode Styles - Overrides everything */
+        body.spd-mode {
+            background: linear-gradient(135deg, #5a0000 0%, #7a0000 100%) !important;
+            font-family: 'Times New Roman', Times, serif !important;
+            font-size: 17px !important;
+        }
+
+        body.spd-mode .container {
+            background: #000000 !important;
+            color: #FF0000 !important;
+        }
+
+        body.spd-mode h1 {
+            color: #FF0000 !important;
+            font-family: 'Times New Roman', Times, serif !important;
+            font-size: 2.6em !important;
+        }
+
+        body.spd-mode .subtitle {
+            color: #FF0000 !important;
+            font-family: 'Times New Roman', Times, serif !important;
+        }
+
+        body.spd-mode label {
+            color: #FF0000 !important;
+            font-family: 'Times New Roman', Times, serif !important;
+        }
+
+        body.spd-mode input {
+            background: #000000 !important;
+            border-color: #8B0000 !important;
+            color: #8B0000 !important;
+            font-family: 'Times New Roman', Times, serif !important;
+            font-size: 17px !important;
+        }
+
+        body.spd-mode input::placeholder {
+            font-family: 'Times New Roman', Times, serif !important;
+            color: #8B0000 !important;
+        }
+
+        body.spd-mode input:focus {
+            border-color: #FF0000 !important;
+        }
+
+        body.spd-mode button {
+            background: #FF0000 !important;
+            color: #000000 !important;
+            border: 2px solid #000000 !important;
+            font-family: 'Times New Roman', Times, serif !important;
+            font-size: 19px !important;
+        }
+
+        body.spd-mode .result {
+            background: #000000 !important;
+            border-left-color: #FF0000 !important;
+            font-family: 'Times New Roman', Times, serif !important;
+        }
+
+        body.spd-mode .result-label {
+            color: #FF0000 !important;
+            font-family: 'Times New Roman', Times, serif !important;
+        }
+
+        body.spd-mode .result-value {
+            color: #FF0000 !important;
+            font-family: 'Times New Roman', Times, serif !important;
+            font-size: 2.1em !important;
+        }
+
+        body.spd-mode .checkbox-group {
+            background: #000000 !important;
+            border-color: #8B0000 !important;
+        }
+
+        body.spd-mode .running-list-header {
+            color: #FF0000 !important;
+            border-bottom-color: #5a0000 !important;
+            font-family: 'Times New Roman', Times, serif !important;
+            font-size: 1.3em !important;
+        }
+
+        body.spd-mode .running-item {
+            background: #000000 !important;
+            border-color: #8B0000 !important;
+        }
+
+        body.spd-mode .running-item-label {
+            color: #FF0000 !important;
+            font-family: 'Times New Roman', Times, serif !important;
+        }
+
+        body.spd-mode .running-item-value {
+            color: #FF0000 !important;
+            font-family: 'Times New Roman', Times, serif !important;
+        }
+
+        body.spd-mode .combined-total {
+            background: #5a0000 !important;
+            color: #FF0000 !important;
+        }
+
+        body.spd-mode .combined-total-label,
+        body.spd-mode .combined-total-details {
+            color: #FF0000 !important;
+            opacity: 1 !important;
+            font-family: 'Times New Roman', Times, serif !important;
+        }
+
+        body.spd-mode .mode-toggle {
+            color: #FF0000 !important;
+            font-family: 'Times New Roman', Times, serif !important;
+        }
+
+        body.spd-mode .mode-toggle label {
+            color: #FF0000 !important;
+            font-family: 'Times New Roman', Times, serif !important;
+        }
+
+        body.spd-mode .spd-toggle {
+            color: #FF0000 !important;
+            font-family: 'Times New Roman', Times, serif !important;
+            border-top-color: #5a0000 !important;
+        }
+
+        body.spd-mode .spd-toggle label {
+            color: #FF0000 !important;
+            font-family: 'Times New Roman', Times, serif !important;
+        }
+
+        body.spd-mode .remove-btn {
+            background: #5a0000 !important;
+            color: #000000 !important;
+            font-weight: bold !important;
+        }
+
+        body.spd-mode .remove-btn:hover {
+            background: #7a0000 !important;
+            color: #000000 !important;
+        }
+
+        .spd-toggle {
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            gap: 8px;
+            font-size: 0.85em;
+            color: #666;
+            margin-top: 20px;
+            padding-top: 15px;
+            border-top: 2px solid #e0e0e0;
+        }
+
+        .spd-toggle label {
+            margin: 0;
+            cursor: pointer;
+            user-select: none;
+            font-weight: 500;
+        }
+
+        .spd-toggle input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+            accent-color: #DC143C;
+        }
+
+        body.guinness-mode .spd-toggle {
+            color: #e8d5b7;
+            border-top-color: #5a4230;
+        }
+
+        body.guinness-mode .spd-toggle label {
+            color: #e8d5b7;
+        }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>🍺 Bevlord</h1>
-        <p class="subtitle">Calculate the cost per beverage</p>
+        <div class="mode-toggle">
+            <label for="guinnessMode">Guinness Mode</label>
+            <input type="checkbox" id="guinnessMode" onchange="toggleGuinnessMode()">
+        </div>
+
+        <h1><span id="titleIconLeft">🍺</span> Bevlord <span id="titleIconRight">🍺</span></h1>
+        <p class="subtitle">The Lord of Beverages shall decide your fate.<br>(He has decided that you will drink beer at a reasonable overall price per can.)</p>
 
         <div class="input-group">
             <label for="totalPrice">Total Price ($)</label>
@@ -329,7 +687,7 @@
 
         <div class="checkbox-group">
             <input type="checkbox" id="isNonAlcoholic">
-            <label for="isNonAlcoholic">Non-Alcoholic</label>
+            <label for="isNonAlcoholic">Mixer</label>
         </div>
 
         <div class="checkbox-group">
@@ -353,11 +711,158 @@
                 <div class="combined-total-details" id="combinedTotalDetails"></div>
             </div>
         </div>
+
+        <div class="spd-toggle">
+            <label for="spdMode">SPD Mode</label>
+            <input type="checkbox" id="spdMode" onchange="toggleSPDMode()">
+        </div>
     </div>
 
     <script>
         // Array to store running total items
         let runningItems = [];
+
+        // Store original text content
+        let originalTextContent = new Map();
+        let spdModeActive = false;
+
+        // Greek letter mapping
+        const greekMap = {
+            'A': 'Α', 'B': 'Β', 'C': 'Ξ', 'D': 'Δ', 'E': 'Ε', 'F': 'Φ', 'G': 'Γ', 'H': 'Η',
+            'I': 'Ι', 'J': 'Ψ', 'K': 'Κ', 'L': 'Λ', 'M': 'Μ', 'N': 'Ν', 'O': 'Ο', 'P': 'Π',
+            'Q': 'Θ', 'R': 'Ρ', 'S': 'Σ', 'T': 'Τ', 'U': 'Υ', 'V': 'Ω', 'W': 'Ω', 'X': 'Χ',
+            'Y': 'Ψ', 'Z': 'Ζ',
+            'a': 'α', 'b': 'β', 'c': 'ξ', 'd': 'δ', 'e': 'ε', 'f': 'φ', 'g': 'γ', 'h': 'η',
+            'i': 'ι', 'j': 'ψ', 'k': 'κ', 'l': 'λ', 'm': 'μ', 'n': 'ν', 'o': 'ο', 'p': 'π',
+            'q': 'θ', 'r': 'ρ', 's': 'σ', 't': 'τ', 'u': 'υ', 'v': 'ω', 'w': 'ω', 'x': 'χ',
+            'y': 'ψ', 'z': 'ζ'
+        };
+
+        function convertToGreek(text) {
+            return text.split('').map(char => greekMap[char] || char).join('');
+        }
+
+        function convertAllTextToGreek(element) {
+            // Process all text nodes
+            const walker = document.createTreeWalker(
+                element,
+                NodeFilter.SHOW_TEXT,
+                null
+            );
+
+            const textNodes = [];
+            let node;
+            while (node = walker.nextNode()) {
+                if (node.nodeValue.trim()) {
+                    textNodes.push(node);
+                }
+            }
+
+            textNodes.forEach(textNode => {
+                if (!originalTextContent.has(textNode)) {
+                    originalTextContent.set(textNode, textNode.nodeValue);
+                }
+                textNode.nodeValue = convertToGreek(textNode.nodeValue);
+            });
+
+            // Also convert placeholder text
+            const inputs = element.querySelectorAll('input[placeholder]');
+            inputs.forEach(input => {
+                if (!originalTextContent.has(input)) {
+                    originalTextContent.set(input, input.placeholder);
+                }
+                input.placeholder = convertToGreek(input.placeholder);
+            });
+        }
+
+        function restoreOriginalText(element) {
+            const walker = document.createTreeWalker(
+                element,
+                NodeFilter.SHOW_TEXT,
+                null
+            );
+
+            const textNodes = [];
+            let node;
+            while (node = walker.nextNode()) {
+                textNodes.push(node);
+            }
+
+            textNodes.forEach(textNode => {
+                if (originalTextContent.has(textNode)) {
+                    textNode.nodeValue = originalTextContent.get(textNode);
+                }
+            });
+
+            // Also restore placeholder text
+            const inputs = element.querySelectorAll('input[placeholder]');
+            inputs.forEach(input => {
+                if (originalTextContent.has(input)) {
+                    input.placeholder = originalTextContent.get(input);
+                }
+            });
+        }
+
+        // Toggle SPD Mode
+        function toggleSPDMode() {
+            const isSPDMode = document.getElementById('spdMode').checked;
+            const container = document.querySelector('.container');
+            const spdLabel = document.querySelector('.spd-toggle label');
+            const titleIconLeft = document.getElementById('titleIconLeft');
+            const titleIconRight = document.getElementById('titleIconRight');
+
+            if (isSPDMode) {
+                document.body.classList.add('spd-mode');
+                spdModeActive = true;
+                spdLabel.textContent = 'ΣΦΔ Mode';
+                // Show castle icons on both sides in SPD mode
+                titleIconLeft.textContent = '🏰';
+                titleIconRight.textContent = '🏰';
+                convertAllTextToGreek(container);
+            } else {
+                document.body.classList.remove('spd-mode');
+                spdModeActive = false;
+                spdLabel.textContent = 'SPD Mode';
+                restoreOriginalText(container);
+                originalTextContent.clear();
+
+                // Restore appropriate icons on both sides based on Guinness mode
+                const isGuinnessMode = document.getElementById('guinnessMode').checked;
+                if (isGuinnessMode) {
+                    document.body.classList.add('guinness-mode');
+                    titleIconLeft.textContent = '☘️';
+                    titleIconRight.textContent = '☘️';
+                } else {
+                    document.body.classList.remove('guinness-mode');
+                    titleIconLeft.textContent = '🍺';
+                    titleIconRight.textContent = '🍺';
+                }
+            }
+        }
+
+        // Toggle Guinness Mode
+        function toggleGuinnessMode() {
+            const isSPDMode = document.getElementById('spdMode').checked;
+
+            // Don't allow Guinness mode to change anything if SPD mode is active
+            if (isSPDMode) {
+                return;
+            }
+
+            const isGuinnessMode = document.getElementById('guinnessMode').checked;
+            const titleIconLeft = document.getElementById('titleIconLeft');
+            const titleIconRight = document.getElementById('titleIconRight');
+
+            if (isGuinnessMode) {
+                document.body.classList.add('guinness-mode');
+                titleIconLeft.textContent = '☘️';
+                titleIconRight.textContent = '☘️';
+            } else {
+                document.body.classList.remove('guinness-mode');
+                titleIconLeft.textContent = '🍺';
+                titleIconRight.textContent = '🍺';
+            }
+        }
 
         function calculate() {
             // Get input values
@@ -420,6 +925,13 @@
                 });
                 updateRunningList();
             }
+
+            // If SPD mode is active, convert result text to Greek
+            if (spdModeActive) {
+                setTimeout(() => {
+                    convertAllTextToGreek(result);
+                }, 0);
+            }
         }
 
         function updateRunningList() {
@@ -464,6 +976,11 @@
             } else {
                 combinedTotal.style.display = 'none';
                 runningList.classList.remove('show');
+            }
+
+            // If SPD mode is active, convert new text to Greek
+            if (spdModeActive) {
+                convertAllTextToGreek(runningList);
             }
         }
 
