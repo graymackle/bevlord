@@ -13,8 +13,15 @@ https://graymackle.github.io/bevlord
 
 ### BC Tax Calculation
 - **Default (unchecked)**: 15% tax for alcoholic beverages
-- **Non-Alcoholic checkbox**: 7% tax for sodas and non-alcoholic drinks
+- **Mixer checkbox**: 7% tax for mixers and non-alcoholic drinks
 - **Deposit fee**: Automatically adds $0.10 per beverage
+
+### Display Modes
+- **Light Mode (Default)**: Red theme with clean Arial font
+- **Guinness Mode**: Dark brown theme with gold accents and Metamorphous font - toggle above title
+- **SPD Mode**: Black and red theme with Times New Roman font and Greek letter conversion - toggle at bottom
+  - Overrides other modes when active
+  - All text converts to Greek letters while maintaining meaning
 
 ### Running Total Feature
 - **Running Total checkbox**: Track multiple calculations in a list
@@ -31,9 +38,12 @@ https://graymackle.github.io/bevlord
 - Responsive design works on iPhone Safari and Android browsers
 - Optimized touch targets and input handling
 
-## Next Steps
+## Recent Updates
 
-- Update format and colors of the website
+- Complete styling overhaul with three distinct modes
+- Square corners throughout the design
+- Custom fonts (Kings, Metamorphous, Times New Roman)
+- Greek letter conversion in SPD mode
 
 ## Technical Details
 
