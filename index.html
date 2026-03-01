@@ -35,22 +35,30 @@
             min-height: 600px;
         }
 
+        .title-area {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 70px;
+            margin-bottom: 10px;
+            overflow: hidden;
+        }
+
         h1 {
             color: #000000;
-            text-align: center;
-            margin-bottom: 10px;
-            font-size: 2.5em;
+            font-size: 48px;
             font-family: 'Kings', cursive;
             text-transform: uppercase;
             letter-spacing: 2px;
+            white-space: nowrap;
         }
 
         #titleIconLeft {
-            margin-right: 15px;
+            margin-right: 8px;
         }
 
         #titleIconRight {
-            margin-left: 15px;
+            margin-left: 8px;
         }
 
         .subtitle {
@@ -73,12 +81,14 @@
 
         input {
             width: 100%;
-            padding: 12px;
+            height: 48px;
+            padding: 0 12px;
             border: 2px solid #e0e0e0;
             border-radius: 0;
             font-size: 16px;
             font-family: Arial, Helvetica, sans-serif;
             transition: border-color 0.3s;
+            box-sizing: border-box;
         }
 
         input::placeholder {
@@ -90,9 +100,16 @@
             border-color: #8B0000;
         }
 
+        .button-area {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 55px;
+        }
+
         button {
             width: 100%;
-            padding: 15px;
+            height: 100%;
             background: linear-gradient(135deg, #DC143C 0%, #C41E3A 100%);
             color: white;
             border: none;
@@ -199,9 +216,13 @@
                 font-size: 0.8em;
             }
 
-            h1 {
-                font-size: 1.8em;
+            .title-area {
+                height: 50px;
                 margin-bottom: 8px;
+            }
+
+            h1 {
+                font-size: 28px;
             }
 
             .subtitle {
@@ -219,14 +240,18 @@
             }
 
             input {
-                padding: 14px 12px;
+                height: 48px;
+                padding: 0 12px;
                 font-size: 16px;
             }
 
-            button {
-                padding: 16px;
-                font-size: 17px;
+            .button-area {
+                height: 50px;
                 margin-top: 5px;
+            }
+
+            button {
+                font-size: 17px;
             }
 
             .result {
@@ -387,7 +412,7 @@
         body.guinness-mode h1 {
             color: #d4af37;
             font-family: 'Metamorphous', cursive;
-            font-size: 2.5em;
+            font-size: 28px;
         }
 
         body.guinness-mode .subtitle {
@@ -490,7 +515,7 @@
         body.spd-mode {
             background: linear-gradient(135deg, #5a0000 0%, #7a0000 100%) !important;
             font-family: 'Times New Roman', Times, serif !important;
-            font-size: 17px !important;
+            font-size: 16px !important;
         }
 
         body.spd-mode .container {
@@ -501,17 +526,20 @@
         body.spd-mode h1 {
             color: #FF0000 !important;
             font-family: 'Times New Roman', Times, serif !important;
-            font-size: 2.6em !important;
+            font-size: 28px !important;
+            letter-spacing: 1px !important;
         }
 
         body.spd-mode .subtitle {
             color: #FF0000 !important;
             font-family: 'Times New Roman', Times, serif !important;
+            font-size: 14px;
         }
 
         body.spd-mode label {
             color: #FF0000 !important;
             font-family: 'Times New Roman', Times, serif !important;
+            font-size: 15.5px;
         }
 
         body.spd-mode input {
@@ -536,7 +564,7 @@
             color: #000000 !important;
             border: 2px solid #000000 !important;
             font-family: 'Times New Roman', Times, serif !important;
-            font-size: 19px !important;
+            font-size: 18px !important;
         }
 
         body.spd-mode .result {
@@ -603,6 +631,7 @@
         body.spd-mode .mode-toggle label {
             color: #FF0000 !important;
             font-family: 'Times New Roman', Times, serif !important;
+            font-size: 13.5px;
         }
 
         body.spd-mode .spd-toggle {
@@ -614,6 +643,7 @@
         body.spd-mode .spd-toggle label {
             color: #FF0000 !important;
             font-family: 'Times New Roman', Times, serif !important;
+            font-size: 13.5px;
         }
 
         body.spd-mode .remove-btn {
@@ -661,6 +691,15 @@
         body.guinness-mode .spd-toggle label {
             color: #e8d5b7;
         }
+
+        /* Larger title on desktop only */
+        @media (min-width: 601px) {
+            h1,
+            body.guinness-mode h1,
+            body.spd-mode h1 {
+                font-size: 40px !important;
+            }
+        }
     </style>
 </head>
 <body>
@@ -670,7 +709,9 @@
             <input type="checkbox" id="guinnessMode" onchange="toggleGuinnessMode()">
         </div>
 
-        <h1><span id="titleIconLeft">🍺</span> Bevlord <span id="titleIconRight">🍺</span></h1>
+        <div class="title-area">
+            <h1><span id="titleIconLeft">🍺</span> Bevlord <span id="titleIconRight">🍺</span></h1>
+        </div>
         <p class="subtitle">The Lord of Beverages shall decide your fate.<br>(He has decided that you will drink beer at a reasonable overall price per can.)</p>
 
         <div class="input-group">
@@ -695,7 +736,9 @@
             <label for="runningTotal">Running Total</label>
         </div>
 
-        <button onclick="calculate()">Calculate</button>
+        <div class="button-area">
+            <button onclick="calculate()">Calculate</button>
+        </div>
 
         <div class="result" id="result">
             <div class="result-label">Cost per beverage:</div>
