@@ -691,6 +691,15 @@
         body.guinness-mode .spd-toggle label {
             color: #e8d5b7;
         }
+
+        /* Larger title on desktop only */
+        @media (min-width: 601px) {
+            h1,
+            body.guinness-mode h1,
+            body.spd-mode h1 {
+                font-size: 40px !important;
+            }
+        }
     </style>
 </head>
 <body>
